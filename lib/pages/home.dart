@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  TextEditingController searchText=TextEditingController();
+  String searchText='';
   bool isActive=false;
   //we are displaying the manipulated list by serach functionality and button press
   List<Product> filteredProducts=[];
@@ -28,10 +28,11 @@ class _HomePageState extends State<HomePage> {
     Product(id: 1, quantity: 12, title: 'tiger', description: "this is  a solu tiger", price: 23444, image: 'https://images.unsplash.com/photo-1615963244664-5b845b2025ee?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D'),
   ];
 
-  void filterByTitle(){
+  void filterByTitle(String text){
     setState(() {
+      searchText=text;
       filteredProducts=products.where((product){
-        return product.title.toLowerCase().contains(searchText.text.toLowerCase());
+        return product.title.toLowerCase().contains(searchText.toLowerCase());
       }).toList();
     });
   }
@@ -39,6 +40,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     getAllProducts();
   }
+  
   void getAllProducts(){
     setState(() {
       isActive=true;
@@ -59,9 +61,9 @@ class _HomePageState extends State<HomePage> {
                 height: 80,
                 child: TextField(
                   onChanged: (value){
-                    filterByTitle();
+                    filterByTitle(value);
                   },
-                  controller: searchText,
+                  //controller: searchText,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       
